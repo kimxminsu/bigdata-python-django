@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container my-3">
+ 
+  <!-- {% get_static_prefix %}/경로/파일명.확장자 -->
+  <img src="{% get_static_prefix  %}images/{{img_data.plot}}" 
+             width="600" height="400">  
+  <img src="{% get_static_prefix  %}images/{{img_data.bar}}" 
+             width="600" height="400">  
+  <img src="{% get_static_prefix  %}images/{{img_data.pie}}" 
+             width="600" height="400">                 
+</div>
+{{data}}
+
+{% endblock%}

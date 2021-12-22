@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container my-3">
+  <!-- <img src ="{% static 'images/movie_fig.png' %}"
+        width="600" height="400"> -->
+
+        <!-- {% get_static_prefix %}/경로/파일명.확장자 -->
+        <img src="{% get_static_prefix  %}images/{{img_data}}" 
+             width="100%" height="100%">      
+</div>
+<!-- data 출력  -->
+<!-- {{data}} -->
+
+{% endblock%}

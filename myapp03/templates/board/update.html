@@ -1,0 +1,37 @@
+{% extends 'base.html'  %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+
+    {% csrf_token %}
+  
+    <form action="/update/" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="id" value="{{dto.id}}">
+         <div class="form-group">
+            <label for="writer">writer:</label>
+            <input type="text" class="form-control" id="writer" name="writer" readonly
+                    value="{{user.username}}" readonly>
+          </div>
+         <div class="form-group">
+           <label for="title">title:</label>
+           <input type="text" class="form-control" id="title" name="title" value="{{dto.title}}">
+         </div>
+         <div class="form-group">
+           <label for="content">content:</label>
+           <textarea class="form-control"rows="5" id="content" name="content">{{dto.content}}</textarea>
+         </div>
+         <div class="form-group">
+            <label for="file">file:</label>
+            <input type="file" class="form-control" id="file" name="file">{{dto.filename}}
+          </div>
+         <button type="submit" class="btn btn-primary">수정하기</button>
+       </form>
+</div>
+
+
+
+
+
+
+{% endblock %}

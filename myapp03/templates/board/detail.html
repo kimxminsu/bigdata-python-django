@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <h1>Board Detail</h1>
+    <table class="table table-hover">
+            <tr>
+                <th>글번호</th>
+                <td>{{dto.id }}</td>
+                <th>조회수</th>
+                <td>{{dto.hit}}</td>
+            </tr>
+            <tr>
+                <th>작성자</th>
+                <td>{{dto.writer.username}}</td>
+                <th>작성일</th>
+                <td>{{dto.post_date}}</td>
+            </tr>
+            <tr>
+                <th>글제목</th>
+                <td colspan="3">{{dto.title}}</td>
+            </tr>
+            <tr>
+                <th>글내용</th>
+                <td colspan="3">{{dto.content}}</td>
+            </tr>
+            <tr>
+                <th>파일</th>
+                <td colspan="3">{{dto.filename}} 
+                    {% if  filesize > 0  %}   ({{filesize}}KB)   {% endif %}
+                               
+                </td>
+            </tr>
+        </table>
+        <br />
+       {% if dto.writer.username == user.username  %}
+       <button type="button" class="btn btn-secondary btn-sm update" data-uri="/update_form/{{dto.id}}">수정</button>
+       <button type="button" class="btn btn-secondary btn-sm delete" data-uri="/delete/{{dto.id}}">삭제</button>
+       {% endif %}
+    
+        <div class="container mt-5">
+            <form action="/comment_insert/" method="post" id="frm">
+                <input type="hidden" name="id" value="{{dto.id}}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="content">Comment:</label>
+                    <textarea class="form-control" rows="5" id="content" name="content"></textarea>
+                </div>
+                <button type="button" class="btn btn-success btn-sm _commentInsert">Comment Write</button>
+            </form>
+        </div>
+        <div class="mt-5">댓글(<span class ="cntSpan">{{dto.comment_set.count}}</span>)</div>
+        <!-- 답변 댓글 Start -->
+        {% if  dto.comment_set.count > 0  %}
+                     <div class="mt-3">
+                                  <!-- 답변 댓글 리스트 -->
+                      {%  for comment in dto.comment_set.all %}
+                            <div class="comment py-2 text-muted">
+                               <span style="white-space: pre-line;">{{ comment.content }}</span>
+                               <span>
+                                  - {{ comment.writer }}, {{ comment.post_date }}
+                                
+                               </span>
+                              
+                          </div>
+                      {% endfor  %}
+      
+                     </div>
+                      {% endif %}
+    </div>
+    {% endblock %}
+
+    <!--script block -->
+    {% block script %}
+    <script>
+        $(document).ready(function(){
+
+            $("._commentInsert").click(function(){
+                // if("{{ user.username }}" == "" ){ 
+                //     alert('로그인하세요')
+                //     return;
+                // }
+                if($("#content").val() ==""){ 
+                    alert('댓글을 입력하세요')
+                    return;
+                }
+                $("#frm").submit()
+            })
+
+            $(".delete").on("click",function(){
+                if(confirm("정말 삭제할까요?")){
+                    location.href=$(this).data('uri');
+                }
+            });
+    
+            $(".update").on('click', function() {
+                location.href = $(this).data('uri');
+           
+        });
+        });
+    </script>
+    {% endblock %}    

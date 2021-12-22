@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'bootstrap.min.js' %}"></script>
+    <title>Django!!!</title>
+</head>
+<body>
+    <!-- 네비게이션바 -->
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark mb-3">
+        <a class="navbar-brand" href="/">HOME</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="!collapse navbar-collapse" id="collapsibleNavbar">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/list">게시판</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/movie">영화평점크로링</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/movie_chart">영화평점차트</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/weather">날씨정보</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/map">지도</a>
+            </li>
+       
+          </ul>
+          <ul class="navbar-nav">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">{{user.username}}(로그아웃)</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">로그인</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/signup">회원가입</a>
+                </li>
+            {% endif %}
+          </ul>
+        </div>  
+      </nav>    
+
+<!-- 기본 템플릿 안에 삽입될 내용 Start -->
+{% block content %}
+{% endblock %}
+
+<!-- 자바스크립트 Start -->
+{% block script %}
+{% endblock %}
+<!-- 자바스크립트 End -->
+</body>
+</html>
